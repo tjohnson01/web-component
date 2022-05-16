@@ -15,6 +15,7 @@ template.innerHTML = `
       color: black;
     }
   </style>
+  <h3>Stateful web component test</h3>
   <button id="dec">-</button>
   <span id="count"></span>
   <button id="inc">+</button>`;
