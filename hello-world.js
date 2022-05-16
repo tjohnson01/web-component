@@ -11,6 +11,10 @@ template.innerHTML = `
       display: inline-block;
     }
 
+    h3 { 
+      text-align: left;
+    }
+      
     button {
       color: black;
     }
