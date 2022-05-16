@@ -5,7 +5,6 @@ template.innerHTML = `
       display: inline-block;
     }
   </style>
-  <h3>Counter Web Component</h3>
   <button aria-label="decrement">-</button>
     <p>0</p>
   <button aria-label="increment">+</button>
