@@ -1,53 +1,57 @@
 const template = document.createElement('template');
 template.innerHTML = `
   <style>
-    button, p {
+    * {
+      font-size: 150%;
+      text-align: center;
+    }
+
+    span {
+      width: 4rem;
       display: inline-block;
     }
+
+    button {
+      color: black;
+    }
   </style>
-  <button aria-label="decrement">-</button>
-    <p>0</p>
-  <button aria-label="increment">+</button>
-`;
+  <button id="dec">-</button>
+  <span id="count"></span>
+  <button id="inc">+</button>`;
 
-export class Counter extends HTMLElement {
-  // Attributes we care about getting values from.
-  static get observedAttributes() {
-    return ['value'];
-  }
-
-  set value(value) {
-    this._value = value;
-    this.valueElement.innerText = this._value;
-    this.dispatchEvent(new CustomEvent('valueChange', { detail: this._value }));
-  }
-
-  get value() {
-    return this._value;
-  }
-
+class MyCounter extends HTMLElement {
   constructor() {
     super();
-    this._value = 0;
-
+    this.count = 0;
     this.attachShadow({ mode: 'open' });
-    this.shadowRoot.appendChild(template.content.cloneNode(true));
-
-    this.valueElement = this.shadowRoot.querySelector('p');
-    this.incrementButton = this.shadowRoot.querySelectorAll('button')[1];
-    this.decrementButton = this.shadowRoot.querySelectorAll('button')[0];
-
-    this.incrementButton.addEventListener('click', (e) => this.value++);
-
-    this.decrementButton.addEventListener('click', (e) => this.value--);
   }
 
-  // Lifecycle hook called when a observed attribute changes
-  attributeChangedCallback(attrName, oldValue, newValue) {
-    if (attrName === 'value') {
-      this.value = parseInt(newValue, 10);
+  connectedCallback() {
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
+    this.shadowRoot.getElementById('inc').onclick = () => this.inc();
+    this.shadowRoot.getElementById('dec').onclick = () => this.dec();
+    this.update(this.count);
+  }
+
+  inc() {
+    if (this.count === 10) {
+      return;
+    } else {
+      this.update(++this.count);
     }
+  }
+
+  dec() {
+    if (this.count === 0) {
+      return;
+    } else {
+      this.update(--this.count);
+    }
+  }
+
+  update(count) {
+    this.shadowRoot.getElementById('count').innerHTML = count;
   }
 }
 
-customElements.define('counter', Counter);
+customElements.define('counter', MyCounter);
