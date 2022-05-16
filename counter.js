@@ -6,9 +6,9 @@ template.innerHTML = `
     }
   </style>
   <h3>Counter Web Component</h3>
-  <button>-</button>
+  <button aria-label="decrement">-</button>
     <p>0</p>
-  <button>+</button>
+  <button aria-label="increment">+</button>
 `;
 
 export class Counter extends HTMLElement {
